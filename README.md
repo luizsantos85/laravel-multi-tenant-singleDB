@@ -16,16 +16,24 @@ Já implementei algumas pré configurações abaixo:
 ```bash
 $ git clone https://github.com/luizsantos85/app-laravel-docker.git
 
-    **observar as configurações de portas e usuario no arquivo docker-composer.yml
-    **gerar o arquivo .env e fazer as modificações das portas e usuario de configurações do DB
-    **será criada uma pasta .docker/mysql para os arquivos de banco de dados
-    **Acessar o container do laravel
+**observar as configurações de portas e usuario no arquivo docker-composer.yml
 
+**Copiar o .env.example e gerar o .env, fazer as modificações das portas (se necessário) e usuario do DB
+
+**será criada uma pasta .docker/mysql para os arquivos de banco de dados
+
+**Inicializar os containers
 $ docker compose up -d
+
+**Acessar o container do laravel
 $ docker compose exec app bash
+
+**Instalar os packges do laravel
 $ composer install
+
+**Gerar a key do laravel
 $ php artisan key:generate
 
-    **acessar localhost:(porta selecionada) para teste
+**acessar localhost:(porta selecionada) para teste
 
 ```
