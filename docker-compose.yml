@@ -25,7 +25,7 @@ services: #montagem dos serviços que o docker irá utilizar
         image: nginx:alpine
         restart: always
         ports:
-            - 80:80
+            - 8000:80
         volumes:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
@@ -48,12 +48,6 @@ services: #montagem dos serviços que o docker irá utilizar
         networks:
             - docker-laravel
 
-    #redis
-    redis:
-        image: redis:latest
-        networks:
-            - docker-laravel
-
     #queue
     queue:
         build:
@@ -68,6 +62,12 @@ services: #montagem dos serviços que o docker irá utilizar
             - ./:/var/www
         depends_on:
             - redis
+        networks:
+            - docker-laravel
+
+    #redis
+    redis:
+        image: redis:latest
         networks:
             - docker-laravel
 
