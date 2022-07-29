@@ -37,7 +37,7 @@ services: #montagem dos serviços que o docker irá utilizar
         image: mysql:5.7.22
         restart: always
         ports:
-            - 3306:3306
+            - 3307:3306
         volumes:
             - ./.docker/mysql:/var/lib/mysql
         environment:
