@@ -1,20 +1,21 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-## Modelo de Projeto Laravel com Docker
+## Projeto Laravel Multi-Tenant Single Database
 
 Projeto desenvolvido para servir como modelo para trabalhar com o Laravel em containers docker.
 Já implementei algumas pré configurações abaixo:
 
+-   **[Docker]**
 -   **[nginx:alpine]**
--   **[mysql:5.7.22](https://www.mysql.com/)**
+-   **[mysql:8.0](https://www.mysql.com/)**
 -   **[redis]**
 -   **[Laravel:9](https://laravel.com/)**
--   **[PHP:8.0\*](https://www.php.net/manual/pt_BR/index.php)**
+-   **[PHP:8.1](https://www.php.net/manual/pt_BR/index.php)**
 
 ## Instalar App
 
 ```bash
-$ git clone https://github.com/luizsantos85/app-laravel-docker.git
+$ git clone https://github.com/luizsantos85/laravel-multi-tenant-singleDB.git
 
 **observar as configurações de portas e usuario no arquivo docker-composer.yml
 
