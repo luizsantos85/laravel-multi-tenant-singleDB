@@ -34,7 +34,7 @@ services: #montagem dos serviços que o docker irá utilizar
 
     # db
     mysql:
-        image: mysql:5.7.22
+        image: mysql:8.0
         restart: always
         ports:
             - 3307:3306
