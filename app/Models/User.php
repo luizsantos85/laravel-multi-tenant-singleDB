@@ -41,4 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    
+    /**
+     *  RELACIONAMENTOS
+     */
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class, 'tenant_id','id');
+    }
 }
