@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
 
         $tenant = Tenant::create([
             'name' => $request->tenant,
-            'uuid' => Str::uuid()
+            // 'uuid' => Str::uuid()
         ]);
 
         $user = $tenant->users()->create([
