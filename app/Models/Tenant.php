@@ -9,7 +9,7 @@ class Tenant extends Model
 {
     use HasFactory;
 
-    protected $fillabel = ['name'];
+    protected $fillable = ['name','uuid'];
 
 
     /**

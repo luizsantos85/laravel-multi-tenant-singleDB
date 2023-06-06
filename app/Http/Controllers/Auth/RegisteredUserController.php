@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tenant;
 use App\Models\User;
+use Illuminate\Support\Str;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -35,11 +37,17 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'tenant' => ['required', 'string','min:3', 'max:100','unique:tenants,id'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $tenant = Tenant::create([
+            'name' => $request->tenant,
+            'uuid' => Str::uuid()
+        ]);
+
+        $user = $tenant->users()->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
