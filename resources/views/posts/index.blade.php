@@ -7,32 +7,39 @@
 
     <div class="py-12">
 
-        <div class="mx-auto sm:px-6 lg:px-12">
-            <table class="border-separate border-spacing-2 border border-slate-500">
+        <div class="sm:px-6 lg:px-12">
+            <div class="flex mb-3">
+                <a href="{{route('posts.create')}}"
+                    class="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white p-2 shadow-sm font-bold mb-3 text-sm">
+                    Cadastrar Post
+                </a>
+            </div>
+
+            <table class="w-4/5 bg-white border border-gray-200">
                 <thead>
                     <tr>
-                        <th class="border border-slate-700">#ID</th>
-                        <th class="border border-slate-600">Título</th>
-                        <th class="border border-slate-600">Author</th>
-                        <th class="border border-slate-600">Ações</th>
+                        <th class="py-2 px-4 border-b justify-items-start">#ID</th>
+                        <th class="py-2 px-4 border-b">Título</th>
+                        <th class="py-2 px-4 border-b">Autor</th>
+                        <th class="py-2 px-4 border-b">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
+
                     @forelse ($posts as $post)
                     <tr>
-                        <td class="border border-slate-700">{{$post->id}}</td>
-                        <td class="border border-slate-700">{{$post->title}}</td>
-                        <td class="border border-slate-700">{{$post->user->name}}</td>
-                        <td class="border border-slate-700">[Editar]</td>
+                        <td class="py-2 px-4 border-b">{{$post->id}}</td>
+                        <td class="py-2 px-4 border-b">{{$post->title}}</td>
+                        <td class="py-2 px-4 border-b">{{$post->user->name}}</td>
+                        <td class="py-2 px-4 border-b">[Editar]</td>
                     </tr>
 
                     @empty
-                        <tr>
-                            <td class="border border-slate-700" colspan="4">Nenhum post cdastrado.</td>
-                        </tr>
+                    <tr>
+                        <td class="py-2 px-4 border-b"" colspan=" 4">Nenhum post cdastrado.</td>
+                    </tr>
 
                     @endforelse
-
                 </tbody>
             </table>
         </div>
