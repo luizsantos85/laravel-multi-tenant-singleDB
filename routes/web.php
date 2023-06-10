@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,9 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::prefix('posts')->middleware(['auth'])->group(function () {
+    Route::get('/', [PostController::class, 'index'])->name('posts.index');
+});
 
 require __DIR__.'/auth.php';

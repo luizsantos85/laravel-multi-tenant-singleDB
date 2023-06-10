@@ -43,12 +43,17 @@ class User extends Authenticatable
     ];
 
 
-    
+
     /**
      *  RELACIONAMENTOS
      */
     public function tenant()
     {
         return $this->belongsTo(Tenant::class, 'tenant_id','id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class,'user_id','id');
     }
 }
