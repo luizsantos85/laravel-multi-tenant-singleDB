@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Observers\Tenant\TenantObserver;
-use App\Scopes\Tenant\TenantScope;
+use App\Tenant\Traits\TenantTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
     use HasFactory;
+    use TenantTrait;
 
     protected $fillable = ['title', 'body', 'user_id'];
 
@@ -22,17 +22,9 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-
-
+    
     /**
      * FUNÇÔES
      */
-    public static function boot()
-    {
-        parent::boot();
 
-        static::addGlobalScope(new TenantScope);
-
-        static::observe(new TenantObserver);
-    }
 }
