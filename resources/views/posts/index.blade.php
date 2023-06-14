@@ -31,7 +31,9 @@
                         <td class="py-2 px-4 border-b">{{$post->id}}</td>
                         <td class="py-2 px-4 border-b">{{$post->title}}</td>
                         <td class="py-2 px-4 border-b">{{$post->user->name}}</td>
-                        <td class="py-2 px-4 border-b">[Editar]</td>
+                        <td class="py-2 px-4 border-b">
+                            <a href="{{route('posts.edit', $post->id)}}">[Editar]</a>
+                        </td>
                     </tr>
 
                     @empty

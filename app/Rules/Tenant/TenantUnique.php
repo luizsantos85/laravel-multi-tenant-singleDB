@@ -8,15 +8,17 @@ use Illuminate\Contracts\Validation\Rule;
 class TenantUnique implements Rule
 {
 
-    private $table;
+    private $table, $column, $columnValue;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($table)
+    public function __construct($table, $columnValue = null, $column = 'id')
     {
         $this->table = $table;
+        $this->column = $column;
+        $this->columnValue = $columnValue;
     }
 
     /**
@@ -34,6 +36,11 @@ class TenantUnique implements Rule
             ->where($attribute, $value)
             ->where('tenant_id', $tenant)
             ->first();
+
+
+        if($result && $result->{$this->column} == $this->columnValue){
+            return true;
+        }
 
         return is_null($result);
     }

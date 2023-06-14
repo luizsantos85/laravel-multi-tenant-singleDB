@@ -62,7 +62,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+        if(!$post){
+            return redirect()->back()->with('error', 'Post não encontrado.');
+        }
+
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -72,9 +78,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdatePostFormRequest $request, $id)
     {
-        //
+        $post = Post::find($id);
+
+        if (!$post) {
+            return redirect()->back()->with('error', 'Post não encontrado.');
+        }
+
+        $post->update($request->all());
+        return redirect()->route('posts.index');
+
     }
 
     /**
