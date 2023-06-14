@@ -6,7 +6,15 @@
     </x-slot>
 
     <div class="py-12">
+
         <div class="mx-auto px-4 py-8">
+            @if ($errors->any())
+                <ul class="max-w-xl rounded-lg shadow-md bg-red-500 text-white mb-2">
+                    @foreach ($errors->all() as $error)
+                        <li class=" p-1">{{$error}}</li>
+                    @endforeach
+                </ul>
+            @endif
             <form class="max-w-xl bg-white p-6 rounded-lg shadow-md" action="{{route('posts.store')}}" method="post">
                 @csrf
                 <div class="mb-4">
