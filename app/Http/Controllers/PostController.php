@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdatePostFormRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class PostController extends Controller
 {
@@ -39,7 +40,22 @@ class PostController extends Controller
      */
     public function store(StoreUpdatePostFormRequest $request)
     {
-        $post = $request->user()->posts()->create($request->all());
+
+        $data = $request->all();
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $name = Str::of($request->title)->kebab();
+            $ext = $request->image->extension();
+            $nameImage = "{$name}.{$ext}";
+            $data['image'] = $nameImage;
+
+            $upload = $request->image->storeAs('public/posts', $nameImage);
+
+            if(!$upload){
+                return redirect()->back()->with('errors',['Falha no upload']);
+            }
+        }
+
+        $post = $request->user()->posts()->create($data);
         return redirect()->route('posts.index');
     }
 
@@ -51,7 +67,13 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+
+        if (!$post) {
+            return redirect()->back()->with('error', 'Post não encontrado.');
+        }
+
+        return view('posts.show', compact('post'));
     }
 
     /**
