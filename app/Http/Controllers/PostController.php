@@ -48,7 +48,7 @@ class PostController extends Controller
             $nameImage = "{$name}.{$ext}";
             $data['image'] = $nameImage;
 
-            $upload = $request->image->storeAs('public/posts', $nameImage);
+            $upload = $request->image->storeAs('posts', $nameImage);
 
             if(!$upload){
                 return redirect()->back()->with('errors',['Falha no upload']);
