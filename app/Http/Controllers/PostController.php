@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdatePostFormRequest;
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
@@ -40,19 +41,10 @@ class PostController extends Controller
      */
     public function store(StoreUpdatePostFormRequest $request)
     {
-
         $data = $request->all();
-        if($request->hasFile('image') && $request->file('image')->isValid()){
-            $name = Str::of($request->title)->kebab();
-            $ext = $request->image->extension();
-            $nameImage = "{$name}.{$ext}";
-            $data['image'] = $nameImage;
 
-            $upload = $request->image->storeAs('posts', $nameImage);
-
-            if(!$upload){
-                return redirect()->back()->with('errors',['Falha no upload']);
-            }
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $data['image'] = $this->createOrUpdateImage($data['image']);
         }
 
         $post = $request->user()->posts()->create($data);
@@ -86,7 +78,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
-        if(!$post){
+        if (!$post) {
             return redirect()->back()->with('error', 'Post não encontrado.');
         }
 
@@ -103,14 +95,18 @@ class PostController extends Controller
     public function update(StoreUpdatePostFormRequest $request, $id)
     {
         $post = Post::find($id);
+        $data = $request->all();
 
         if (!$post) {
             return redirect()->back()->with('error', 'Post não encontrado.');
         }
 
-        $post->update($request->all());
-        return redirect()->route('posts.index');
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $data['image'] = $this->createOrUpdateImage($data['image'], $post);
+        }
 
+        $post->update($data);
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -121,6 +117,43 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        if (!$post) {
+            return redirect()->back()->with('error', 'Post não encontrado.');
+        }
+
+        if (isset($post) && $post->image) {
+            if (Storage::exists("posts/{$post->image}")) {
+                Storage::delete("posts/{$post->image}");
+            }
+        }
+
+        $post->delete();
+        return redirect()->route('posts.index');
+    }
+
+    public function createOrUpdateImage($image, $post = null)
+    {
+        //remove imagem se existir
+        if (isset($post) && $post->image) {
+            if (Storage::exists("posts/{$post->image}")) {
+                Storage::delete("posts/{$post->image}");
+            }
+        }
+
+        // $name = Str::of($image->title)->kebab();
+        $name = md5(time() . rand(0, 9999));
+        $ext = $image->extension();
+        $nameImage = "{$name}.{$ext}";
+        // $data['image'] = $nameImage;
+
+        $upload = $image->storeAs('posts', $nameImage);
+
+        if (!$upload) {
+            return redirect()->back()->with('errors', ['Falha no upload']);
+        }
+
+        return $nameImage;
     }
 }

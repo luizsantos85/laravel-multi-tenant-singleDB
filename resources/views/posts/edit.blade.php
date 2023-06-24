@@ -15,7 +15,7 @@
                     @endforeach
                 </ul>
             @endif
-            <form class="max-w-xl bg-white p-6 rounded-lg shadow-md" action="{{route('posts.update',$post->id)}}" method="post">
+            <form class="max-w-xl bg-white p-6 rounded-lg shadow-md" action="{{route('posts.update',$post->id)}}" method="post" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
 

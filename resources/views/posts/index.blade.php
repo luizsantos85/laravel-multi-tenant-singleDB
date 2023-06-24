@@ -32,7 +32,8 @@
                         <td class="py-2 px-4 border-b">{{$post->title}}</td>
                         <td class="py-2 px-4 border-b">{{$post->user->name}}</td>
                         <td class="py-2 px-4 border-b">
-                            <a href="{{route('posts.edit', $post->id)}}">[Editar]</a>
+                            {{-- <a href="{{route('posts.edit', $post->id)}}">[Editar]</a> --}}
+                            <a href="{{route('posts.show', $post->id)}}">[Detalhes]</a>
                         </td>
                     </tr>
 
